@@ -161,7 +161,9 @@ int main() {
 
 	// cleanup CPU
 	for(int i = 0; i < cpuDeviceCount; i++) {
+#ifdef __APPLE__
 		clReleaseDevice(cpuDevices[i]);
+#endif
 		clReleaseContext(cpuContexts[i]);
 		clReleaseCommandQueue(cpuQueues[i]);
 	}
@@ -172,7 +174,9 @@ int main() {
 
 	// cleanup GPU
 	for(int i = 0; i < gpuDeviceCount; i++) {
+#ifdef __APPLE__
 		clReleaseDevice(gpuDevices[i]);
+#endif
 		clReleaseContext(gpuContexts[i]);
 		clReleaseCommandQueue(gpuQueues[i]);
 	}

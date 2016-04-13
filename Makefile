@@ -1,16 +1,24 @@
 CC := g++ -std=c++0x
 
-INCLUDES := -framework OpenCL
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+	INCLUDES :=
+	LIBS := -framework OpenCL
+endif
+ifeq ($(UNAME_S),Linux)
+	INCLUDES := -I /usr/local/cuda-7.0/include/
+	LIBS := -lOpenCL
+endif
 
 FLAGS := 
 
 all: test 2_test
 
 test: test.cpp
-	$(CC) $(INCLUDES) $(FLAGS) -o $@ $<
+	$(CC) $(INCLUDES) $(FLAGS) -o $@ $< $(LIBS)
 
 2_test: 2_test.cpp
-	$(CC) $(INCLUDES) $(FLAGS) -o $@ $<
+	$(CC) $(INCLUDES) $(FLAGS) -o $@ $< $(LIBS)
 
 clean:
 	rm test 2_test
